@@ -15,6 +15,10 @@ function update_system_packages() {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
         if [ "$NAME" == 'Ubuntu' ]; then
+            if ! command -v add-apt-repository > /dev/null 2>&1; then
+                sudo apt-get -yqq install software-properties-common
+            fi
+
             sudo add-apt-repository universe || install_error "Couldn't enable universe repository"
         fi
     fi
