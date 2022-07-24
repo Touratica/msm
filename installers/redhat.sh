@@ -14,7 +14,11 @@ function update_system_packages() {
 
 function install_dependencies() {
     install_log "Installing required packages"
-    sudo yum -yq install java jq rsync screen wget zip || install_error "Couldn't install dependencies"
+    sudo yum -yq install jq rsync screen wget zip || install_error "Couldn't install dependencies"
+    if ! command -v java > /dev/null 2>&1; then
+        install_log "Installing Java (OpenJDK 17)"
+        sudo yum -yq install java-17-openjdk || install_error "Couldn't install Java"
+    fi
 }
 
 function enable_init() {

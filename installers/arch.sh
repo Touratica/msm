@@ -15,6 +15,10 @@ function update_system_packages() {
 function install_dependencies() {
     install_log "Installing required packages"
     sudo pacman --noconfirm -S jq rsync screen wget zip || install_error "Couldn't install dependencies"
+    if ! command -v java > /dev/null 2>&1; then
+        install_log "Installing Java (OpenJDK 17)"
+        sudo pacman --noconfirm -S jre17-openjdk-headless || install_error "Couldn't install Java"
+    fi
 }
 
 function enable_init() {

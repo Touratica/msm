@@ -25,6 +25,10 @@ function update_system_packages() {
 function install_dependencies() {
     install_log "Installing required packages"
     DEBIAN_FRONTEND=noninteractive sudo apt-get -yqq install jq rsync screen wget zip || install_error "Couldn't install dependencies"
+    if ! command -v java > /dev/null 2>&1; then
+        install_log "Installing Java (OpenJDK 17)"
+        DEBIAN_FRONTEND=noninteractive sudo apt-get -yqq install openjdk-17-jre-headless || install_error "Couldn't install Java"
+    fi
 }
 
 function enable_init() {
