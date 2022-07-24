@@ -12,13 +12,13 @@ function update_system_packages() {
             sudo add-apt-repository universe || install_error "Couldn't enable universe repository"
         fi
     fi
-    sudo apt-get update || install_error "Couldn't update package list"
-    sudo apt-get upgrade || install_error "Couldn't upgrade packages"
+    DEBIAN_FRONTEND=noninteractive sudo apt-get -yqq update || install_error "Couldn't update package list"
+    DEBIAN_FRONTEND=noninteractive sudo apt-get -yqq upgrade || install_error "Couldn't upgrade packages"
 }
 
 function install_dependencies() {
     install_log "Installing required packages"
-    sudo apt-get install screen rsync zip jq || install_error "Couldn't install dependencies"
+    DEBIAN_FRONTEND=noninteractive sudo apt-get -yqq install jq rsync screen zip || install_error "Couldn't install dependencies"
 }
 
 function enable_init() {

@@ -4,12 +4,12 @@ source /tmp/msmcommon.sh && rm -f /tmp/msmcommon.sh
 
 function update_system_packages() {
     install_log "Updating sources"
-    sudo pacman -Syy || install_error "Couldn't update packages"
+    sudo pacman --noconfirm -Syy || install_error "Couldn't update packages"
 }
 
 function install_dependencies() {
     install_log "Installing required packages"
-    sudo pacman --noconfirm -S screen rsync zip wget jq || install_error "Couldn't install dependencies"
+    sudo pacman --noconfirm -S jq rsync screen wget zip || install_error "Couldn't install dependencies"
 }
 
 function enable_init() {
