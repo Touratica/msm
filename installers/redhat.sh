@@ -2,6 +2,11 @@ UPDATE_URL="https://raw.githubusercontent.com/msmhq/msm/master"
 wget -q ${UPDATE_URL}/installers/common.sh -O /tmp/msmcommon.sh
 source /tmp/msmcommon.sh && rm -f /tmp/msmcommon.sh
 
+# Installs sudo if it is not installed
+function install_sudo() {
+    yum -yq install sudo
+}
+
 function update_system_packages() {
     install_log "Updating sources"
     sudo yum -yq update --skip-broken || install_error "Couldn't update packages"
@@ -9,7 +14,7 @@ function update_system_packages() {
 
 function install_dependencies() {
     install_log "Installing required packages"
-    sudo yum -yq install java jq rsync screen zip || install_error "Couldn't install dependencies"
+    sudo yum -yq install java jq rsync screen wget zip || install_error "Couldn't install dependencies"
 }
 
 function enable_init() {

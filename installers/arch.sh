@@ -2,6 +2,11 @@ UPDATE_URL="https://raw.githubusercontent.com/msmhq/msm/master"
 curl -L "${UPDATE_URL}/installers/common.sh" -o /tmp/msmcommon.sh  #wget isn't installed on Arch by default
 source /tmp/msmcommon.sh && rm -f /tmp/msmcommon.sh
 
+# Installs sudo if it is not installed
+function install_sudo() {
+    pacman --noconfirm -S sudo 
+}
+
 function update_system_packages() {
     install_log "Updating sources"
     sudo pacman --noconfirm -Syy || install_error "Couldn't update packages"
